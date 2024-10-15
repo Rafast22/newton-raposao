@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Editor de Fórmulas com MathQuill</title>
+  <script src="https://cdn.jsdelivr.net/npm/mathquill@latest/mathquill.min.js"></script>
+  <style>
+    #math-field {
+      width: 300px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="math-field"></div>
+  <script>
+    MathQuill.getInterface(2).MathField(document.getElementById('math-field'));
+  </script>
+</body>
+</html>
