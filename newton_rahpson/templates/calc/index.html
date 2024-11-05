@@ -2,19 +2,217 @@
 <html>
 <head>
   <title>Editor de Fórmulas com MathQuill</title>
-  <script src="https://cdn.jsdelivr.net/npm/mathquill@latest/mathquill.min.js"></script>
+  {% load static %}
+  <script src="{% static "jquery.js" %}"></script> 
+  <link rel="stylesheet" href="{% static 'mathquill.css' %}">
+  <link rel="stylesheet" href="{% static 'pure-min.css' %}">
+  <link rel="stylesheet" href="{% static 'calcular.css' %}">
+  <script src="{% static 'mathquill.js' %}"></script>
   <style>
-    #math-field {
-      width: 300px;
-      border: 1px solid #ccc;
+    
+    .math-keyboard { 
+      display: grid;
+      grid-template-columns: repeat(5, 1fr); 
+      gap: 5px;
       padding: 10px;
     }
+    .math-field {
+      /* ... outros estilos ... */
+      overflow: hidden; 
+    }
+
+    .math-keyboard button {
+      padding: 10px;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+      
+    .math-numpad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 colunas para o teclado numérico */
+      gap: 5px;
+      padding: 10px;
+    }
+
+.math-numpad button {
+  padding: 10px;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+.mq-textarea {
+  display: none; 
+}
+
   </style>
 </head>
 <body>
-  <div id="math-field"></div>
+  <div id="example">
+    <span id="math-field"> </span>
+  
+    <script>
+    var mathFieldSpan = document.getElementById('math-field');
+    var latexSpan = document.getElementById('latex');
+  
+    var MQ = MathQuill.getInterface(2); // for backcompat
+    var mathField = MQ.MathField(mathFieldSpan, {
+      spaceBehavesLikeTab: true, // configurable
+      handlers: {
+        edit: function() { // useful event handlers
+          latexSpan.textContent = mathField.latex(); // simple API
+        }
+      }
+    });
+    </script>
+  </div>  {% comment %} <div id="math-keyboard">
+    <button data-latex="\sqrt{}">√</button>
+    <button data-latex="\sin">sin</button>
+    <button data-latex="\cos">cos</button>
+    <button data-latex="\tan">tan</button>
+    <button data-latex="\arcsin">arcsin</button>
+    <button data-latex="\arccos">arccos</button>
+    <button data-latex="\arctan">arctan</button>
+    <button data-latex="\ln">ln</button>
+    <button data-latex="\log">log</button>
+    
+    <button data-latex="\frac{}{}">/</button>
+
+
+    <button data-latex="+">+</button>
+    <button data-latex="-">-</button>
+    <button data-latex="\times">\times</button>
+    <button data-latex="\div">\div</button>
+    <button data-latex="=">=</button>
+  
+    <button data-latex="\frac{}{}">\frac</button>
+  
+    <button data-latex="^{}">^</button>
+    <button data-latex="_{}">_</button>
+  
+    <button data-latex="\sqrt{}">\sqrt</button>
+    <button data-latex="\sqrt[]{}">\sqrt[ ]</button>
+  
+    <button data-latex="\sin">sin</button>
+    <button data-latex="\cos">cos</button>
+    <button data-latex="\tan">tan</button>
+  
+    <button data-latex="\arcsin">arcsin</button>
+    <button data-latex="\arccos">arccos</button>
+    <button data-latex="\arctan">arctan</button>
+  
+    <button data-latex="\ln">ln</button>
+    <button data-latex="\log">log</button>
+  
+    <button data-latex="\pi">\pi</button>
+    <button data-latex="\theta">\theta</button>
+    <button data-latex="\alpha">\alpha</button>
+    <button data-latex="\beta">\beta</button>
+  
+    <button data-latex="\infty">\infty</button>
+    <button data-latex="\pm">\pm</button>
+    <button data-latex="\neq">\neq</button>
+    <button data-latex="\leq">\leq</button>
+    <button data-latex="\geq">\geq</button>
+  
+    <button data-latex="()">( )</button>
+    <button data-latex="[]">[ ]</button>
+    <button data-latex="\{\}">\{ \}</button>
+    
+    </div>
+    <div id="math-numpad">
+      <button data-latex="1">1</button>
+      <button data-latex="2">2</button>
+      <button data-latex="3">3</button>
+      <button data-latex="4">4</button>
+      <button data-latex="5">5</button>
+      <button data-latex="6">6</button>
+      <button data-latex="7">7</button>
+      <button data-latex="8">8</button>
+      <button data-latex="9">9</button>
+      <button data-latex="0">0</button>
+      <button data-latex=".">.</button>
+    </div> {% endcomment %}
+    <div class="container">
+      <div class="header">
+          <h1>Math Keyboard</h1>
+    
+      </div>
+      <div class="symbols">
+        <button class="symbol" data-latex="\infty" >□ⁿ</button>
+        <button class="symbol" data-latex="\infty" >+</button>
+        <button class="symbol" data-latex="\infty" >-</button>
+        <button class="symbol" data-latex="\infty" >÷</button>
+        <button class="symbol" data-latex="\infty" >x</button>
+        <button class="symbol" data-latex="\infty" >√□</button>
+        <button class="symbol" data-latex="\infty" >logₐ</button>
+
+        {% comment %} <button class="symbol" data-latex="\infty" >∫</button>
+        <button class="symbol" data-latex="\infty" >d/dx</button> {% endcomment %}
+
+        <button class="symbol" data-latex="\infty" >ln</button>
+        <button class="symbol" data-latex="\infty" >lim</button>
+        <button class="symbol" data-latex="\infty" >∑</button>
+        <button class="symbol" data-latex="\infty" >sin</button>
+        <button class="symbol" data-latex="\infty" >cos</button>
+        <button class="symbol" data-latex="\infty" >tan</button>
+        <button class="symbol" data-latex="\infty" >cot</button>
+        <button class="symbol" data-latex="\infty" >csc</button>
+        <button class="symbol" data-latex="\infty" >sec</button>
+        {% comment %} <button class="symbol" data-latex="\infty" >π</button> {% endcomment %}
+      </div>
+    <div class="numeric-keyboard">
+      <div class="numeric-key">7</div>
+      <div class="numeric-key">8</div>
+      <div class="numeric-key">9</div>
+      <div class="numeric-key">4</div>
+      <div class="numeric-key">5</div>
+      <div class="numeric-key">6</div>
+      <div class="numeric-key">1</div>
+      <div class="numeric-key">2</div>
+      <div class="numeric-key">3</div>
+      <div class="numeric-key">.</div>
+      <div class="numeric-key">0</div>
+      <div class="numeric-key">,</div>
+
+    </div>
+  </div>
   <script>
-    MathQuill.getInterface(2).MathField(document.getElementById('math-field'));
+      var mathFieldSpan = document.getElementById('math-field');
+    var MQ = MathQuill.getInterface(2); 
+    var mathField = MQ.MathField(mathFieldSpan, {
+      spaceBehavesLikeTab: true,   
+ // Permite usar a tecla espaço como Tab
+      leftRightIntoCmdGoes: 'up', // Move o cursor para cima/baixo ao usar as teclas de seta
+      restrictMismatchedBrackets: true, // Impede a inserção de parênteses/colchetes incompatíveis
+      supSubsRequireOperand: true, // Requer um operando antes de inserir sobrescritos/subscritos
+      autoCommands: 'pi theta sqrt sum prod alpha beta gamma delta epsilon zeta eta', // Comandos que podem ser inseridos digitando seus nomes
+      autoOperatorNames: 'sin cos tan arcsin arccos arctan ln log', // Operadores que podem ser inseridos digitando seus nomes
+      handlers: {
+        edit: function() { 
+          // Aqui você pode adicionar código para lidar com as edições no campo, se necessário
+        }
+      }
+    });
+    {% comment %} var keyboardButtons = document.querySelectorAll('#math-keyboard button');
+    var keyboard = document.querySelectorAll('#symbols button');
+    var numpad = document.querySelectorAll("#math-numpad button")
+    keyboardButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        var latex = this.getAttribute('data-latex');
+        mathField.write(latex);
+        mathField.focus(); 
+      });
+    });
+    keyboard.forEach(function(button) {
+      button.addEventListener('click', function() {
+        var latex = this.getAttribute('data-latex');
+        mathField.write(latex);
+        mathField.focus(); 
+      });
+    }); {% endcomment %}
+
+    
   </script>
 </body>
 </html>
